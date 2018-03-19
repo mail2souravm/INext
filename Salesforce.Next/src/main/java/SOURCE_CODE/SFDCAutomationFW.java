@@ -2,11 +2,14 @@ package SOURCE_CODE;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SFDCAutomationFW {
 
@@ -98,14 +101,42 @@ public class SFDCAutomationFW {
 	 	myWD.get().findElement(By.xpath(xpath_Password)).clear();
 		myWD.get().findElement(By.xpath(xpath_Password)).sendKeys(pw);
 		myWD.get().findElement(By.xpath(xpath_LoginButton)).click();
-				
+			
+		
+		
+		Thread.sleep(5000L);		
+			
+		
+		myWD.get().findElement(By.xpath("//a[text()='No Thanks'][1]")).click();
+		Thread.sleep(3000L);
+		myWD.get().findElement(By.xpath("//label[@for='lex-checkbox-7'][1]/span[1]")).click();
+		Thread.sleep(2000L);
+		myWD.get().findElement(By.xpath("//input[@title='Send to Salesforce'][1]")).click();
+	
+		WebDriverWaitForElement("//a[contains(normalize-space(text()),'Home')]", 30);
 		return true;
 		}catch(Exception e)
-		{	
+		{        	
 			e.printStackTrace();
 			return false;
 		}
 		
-	}
+}
+	
+public static WebElement WebDriverWaitForElement(String xpath, long waitingTimeinsec) throws Exception
+{
+	WebElement element=null;
+    try {
+    	 	WebDriverWait wait = new WebDriverWait(myWD.get(), waitingTimeinsec);
+    	 	element = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
+    	 	return element;
+       	 }
+     	catch(Exception e)
+     	{
+     		e.printStackTrace();
+     		return element;
+    	 
+     	}
+ }
 	
 }
