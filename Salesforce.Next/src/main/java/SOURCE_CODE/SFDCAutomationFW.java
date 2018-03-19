@@ -139,4 +139,10 @@ public static WebElement WebDriverWaitForElement(String xpath, long waitingTimei
      	}
  }
 	
+
+public MemberOfLink Link(String LinkName) throws Exception
+{
+	return new MemberOfLink(LinkName);
+}
+
 }

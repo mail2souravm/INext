@@ -21,7 +21,7 @@ public class TC01 {
 		System.out.println("from TC01 --> Browser:"+brow.get());
 		sfdc.get().OpenURL(null, "https://login.salesforce.com", brow.get());
 		sfdc.get().LoginToSFDC("mail2souravm@gmail.com","Welcome300");
-		
+		sfdc.get().Link("Leads").Click();
 	}
 	
 }

@@ -20,7 +20,7 @@ public class TC03 {
 		System.out.println("from TC03 --> Browser:"+brow.get());
 		sfdc.get().OpenURL(null, "https://login.salesforce.com", brow.get());
 		sfdc.get().LoginToSFDC("matt.young@cognizant.com","Welcome1");
-		
+		sfdc.get().Link("Contacts").Click();
 	}
 	
 }
