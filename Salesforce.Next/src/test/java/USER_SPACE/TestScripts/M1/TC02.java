@@ -20,7 +20,16 @@ public class TC02 {
 		System.out.println("from TC02 --> Browser:"+brow.get());
 		sfdc.get().OpenURL(null, "https://login.salesforce.com", brow.get());
 		sfdc.get().LoginToSFDC("matt.young@cognizant.com","Welcome1");
-		sfdc.get().Link("Accounts").Click();
+		sfdc.get().Link("Leads").Click();
+		sfdc.get().Button("New").Click();
+		sfdc.get().Button("Save").Click();
+		sfdc.get().Field("Last Name").VerifyFieldErrorMsgOnEditPage("You must enter a value");
+		sfdc.get().Field("Company").VerifyFieldErrorMsgOnEditPage("You must enter a value");
+		sfdc.get().Field("First Name").Type(sfdc.get().GetCurrentDateTimeStamp());
+		sfdc.get().Field("Company").Type(sfdc.get().GetCurrentDateTimeStamp());
+		sfdc.get().Button("Save").Click();
+		Thread.sleep(2000L);
+		sfdc.get().LogOff();
 	}
 	
 }
