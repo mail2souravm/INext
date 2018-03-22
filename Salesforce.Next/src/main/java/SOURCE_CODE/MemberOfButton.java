@@ -16,10 +16,7 @@ public class MemberOfButton {
 		ButtonName = BN;
 		
 						
-		xpath = "(//input[(@value=' " + ButtonName+
-				" ' or normalize-space(@value)='" + ButtonName + 
-				"' or @value='  " + ButtonName +
-				"  ') and contains(normalize-space(@class),'btn')])[1]";
+		xpath = "(//input[normalize-space(@value)='"+ButtonName+"' and contains(normalize-space(@class),'btn')])[1]";
 		
 		
 		myWD = SFDCAutomationFW.myWD;

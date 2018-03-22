@@ -28,8 +28,10 @@ public class TC01 {
 		sfdc.get().Field("Company").VerifyFieldErrorMsgOnEditPage("You must enter a value");
 		sfdc.get().Field("First Name").Type(sfdc.get().GetCurrentDateTimeStamp());
 		sfdc.get().Field("Company").Type(sfdc.get().GetCurrentDateTimeStamp());
-		sfdc.get().Button("Save").Click();
+		sfdc.get().Field("Last Name").Type(sfdc.get().GetCurrentDateTimeStamp());
 		Thread.sleep(2000L);
+		sfdc.get().Button("Save").Click();
+		Thread.sleep(1000L);
 		sfdc.get().LogOff();
 		
 		

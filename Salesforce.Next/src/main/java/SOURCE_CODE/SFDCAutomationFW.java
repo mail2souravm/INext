@@ -75,7 +75,8 @@ public class SFDCAutomationFW {
 	//this is second commit test
 	//public static String Browser = null;
 	public static final ThreadLocal<String> brows = new ThreadLocal<String>();
-	public static final ThreadLocal<JavascriptExecutor> Javascript = new ThreadLocal<JavascriptExecutor>();
+	//public static final ThreadLocal<JavascriptExecutor> Javascript = new ThreadLocal<JavascriptExecutor>();
+	public static JavascriptExecutor Javascript;
 	
 	public static final ThreadLocal<WebDriver> myWD = new ThreadLocal<WebDriver>(){
         @Override
@@ -109,6 +110,11 @@ public class SFDCAutomationFW {
     			//DesiredCapabilities capabilities = DesiredCapabilities.internetExplorer();
     			return (new InternetExplorerDriver());
     		}
+        	
+      
+        	
+        	
+        	
         	return null;
         	}catch(Exception e)
         	{
@@ -129,7 +135,15 @@ public class SFDCAutomationFW {
 				//browser = args[0];
 				
 			}
-						
+			
+			//*************************
+			
+			
+				
+			
+			
+			//***********************
+			
 			brows.set(browser);
 		
 			myWD.get().navigate().to(URL);
@@ -148,6 +162,10 @@ public class SFDCAutomationFW {
 	{
 		try
 		{
+			
+		Javascript = (JavascriptExecutor) myWD.get();	
+			
+			
 			
 		Thread.sleep(2000L);
 		String xpath_UserName = "//input[normalize-space(@type)='email' and normalize-space(@id)='username'][1]";
@@ -223,7 +241,7 @@ public static void WaitForPageToLoad(int timeOutInSeconds) throws Exception
 			
 		} 
 		
-		if (Javascript.get().executeScript(command).toString().equals("complete"))
+		if (Javascript.executeScript(command).toString().equals("complete"))
 		{ 
 			//System.out.println("Inside WaitForPageToLoad(Success)");
 			break; 
@@ -382,7 +400,7 @@ public static void MouseMove(String xpathoftheelement) throws Exception
  */
 public static void AddToXLLogs(String Message,String PassORFail) throws Exception
 {
-	
+	/*
 	try
 	{
 	al_xl_details.add(Message);
@@ -426,6 +444,7 @@ public static void AddToXLLogs(String Message,String PassORFail) throws Exceptio
 			throw exp1;
 		}
 	}
+	*/
 }
 
 /**
@@ -514,7 +533,7 @@ public static boolean CloseWindow(String UniqueStringinWindowTitle) throws Excep
  */
 public static void HighLight(WebElement webe) throws Exception
 {
-	Javascript.get().executeScript("arguments[0].setAttribute('style', arguments[1]);", webe, "color: green; border: 2px solid green;");
+	Javascript.executeScript("arguments[0].setAttribute('style', arguments[1]);", webe, "color: green; border: 2px solid green;");
 }
 
 /**
