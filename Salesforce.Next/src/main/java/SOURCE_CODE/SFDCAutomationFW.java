@@ -125,7 +125,7 @@ public class SFDCAutomationFW {
         }
 	};
 	
-	public boolean OpenURL(String[] args,String URL,String browser) throws Exception
+	public synchronized boolean OpenURL(String[] args,String URL,String browser) throws Exception
 	{
 		try 
 		{
@@ -145,7 +145,7 @@ public class SFDCAutomationFW {
 			//***********************
 			
 			brows.set(browser);
-		
+			myWD.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			myWD.get().navigate().to(URL);
 			return true;
 		
@@ -165,7 +165,7 @@ public class SFDCAutomationFW {
 			
 		Javascript = (JavascriptExecutor) myWD.get();	
 			
-			
+		System.out.println("javascript:"+Javascript.toString());	
 			
 		Thread.sleep(2000L);
 		String xpath_UserName = "//input[normalize-space(@type)='email' and normalize-space(@id)='username'][1]";
@@ -177,17 +177,20 @@ public class SFDCAutomationFW {
 		myWD.get().findElement(By.xpath(xpath_Password)).sendKeys(pw);
 		myWD.get().findElement(By.xpath(xpath_LoginButton)).click();
 			
-		
+		System.out.println("(myWD.toString():"+myWD.get().toString());
 		
 		Thread.sleep(5000L);		
 			
+		if((myWD.get().toString().contains("ChromeDriver")) ||(myWD.get().toString().contains("FirefoxDriver")))
+		{
+			myWD.get().findElement(By.xpath("//a[text()='No Thanks'][1]")).click();
+			Thread.sleep(3000L);
+			myWD.get().findElement(By.xpath("//label[@for='lex-checkbox-7'][1]/span[1]")).click();
+			Thread.sleep(2000L);
+			myWD.get().findElement(By.xpath("//input[@title='Send to Salesforce'][1]")).click();
 		
-		myWD.get().findElement(By.xpath("//a[text()='No Thanks'][1]")).click();
-		Thread.sleep(3000L);
-		myWD.get().findElement(By.xpath("//label[@for='lex-checkbox-7'][1]/span[1]")).click();
-		Thread.sleep(2000L);
-		myWD.get().findElement(By.xpath("//input[@title='Send to Salesforce'][1]")).click();
-	
+		}
+		
 		WebDriverWaitForElement("//a[contains(normalize-space(text()),'Home')]", 30);
 		return true;
 		}catch(Exception e)
@@ -241,6 +244,7 @@ public static void WaitForPageToLoad(int timeOutInSeconds) throws Exception
 			
 		} 
 		
+		
 		if (Javascript.executeScript(command).toString().equals("complete"))
 		{ 
 			//System.out.println("Inside WaitForPageToLoad(Success)");
@@ -269,7 +273,7 @@ public static void LogOff() throws Exception
 	try 
 	{
 	String xp = "//span[@id='userNavLabel' and normalize-space(@class)='menuButtonLabel']";
-	WaitForPageToLoad(15);
+	//WaitForPageToLoad(15);
 	WaitForElement(xp,15);
 	myWD.get().findElement(By.xpath(xp)).click();
 	
@@ -307,7 +311,7 @@ public static void LogOff() throws Exception
  * @Description Waits for the specified time until the webelemnt is available to WebDriver
  * @Date Aug 7, 2014
  */
-public static boolean WaitForElement(String xpath, long waitingTimeinsec) throws Exception
+public static synchronized boolean WaitForElement(String xpath, long waitingTimeinsec) throws Exception
 {
      try {
     	 	//Uncomment WaitForPageLoad() function call when executing the scripts in IE
@@ -662,21 +666,21 @@ public static String GetCurrentDateTimeStamp() throws Exception
 {
     
    	Calendar cal = Calendar.getInstance();
-    SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyHHmmss");
+    SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyHHmmSSS");
     return (sdf.format(cal.getTime()));                     
           
 }
 
 //******************** Part of OR Library **********************
-public MemberOfLink Link(String LinkName) throws Exception
+public static MemberOfLink Link(String LinkName) throws Exception
 {
 	return new MemberOfLink(LinkName);
 }
-public MemberOfButton Button(String ButtonName) throws Exception
+public static MemberOfButton Button(String ButtonName) throws Exception
 {
 	return new MemberOfButton(ButtonName);
 }
-public MemberOfField Field(String FieldName) throws Exception
+public static MemberOfField Field(String FieldName) throws Exception
 {
 	return new MemberOfField(FieldName);
 }

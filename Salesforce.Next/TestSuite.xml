@@ -2,31 +2,12 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="Suite" thread-count="3" parallel="methods">
  <test name="IETest">
-  	<parameter name="browser" value="ie">
+  	<parameter name="browser" value="chrome">
     	<classes>
       		 <class name="USER_SPACE.TestScripts.M1.TC01"/>
       		 <class name="USER_SPACE.TestScripts.M1.TC02"/>
       		 <class name="USER_SPACE.TestScripts.M1.TC03"/>
     	</classes>
     </parameter>
-  </test> <!-- Test -->  
-  <test name="ChromeTest">
-  	<parameter name="browser" value="Chrome">
-    	<classes>
-      		<class name="USER_SPACE.TestScripts.M1.TC01"/>
-      		<class name="USER_SPACE.TestScripts.M1.TC02"/>
-      		<class name="USER_SPACE.TestScripts.M1.TC03"/>
-    	</classes>
-    </parameter>
-  </test> <!-- Test -->
-  <test name="FirefoxTest">
-  	<parameter name="browser" value="Firefox">
-    	<classes>
-      		<class name="USER_SPACE.TestScripts.M1.TC01"/>
-      		<class name="USER_SPACE.TestScripts.M1.TC02"/>
-      		<class name="USER_SPACE.TestScripts.M1.TC03"/>
-    	</classes>
-    </parameter>
-  </test> <!-- Test -->
- 
+  </test>
 </suite> <!-- Suite -->

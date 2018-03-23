@@ -154,6 +154,8 @@ public class MemberOfField {
 		
 		try
 		{
+					
+			
 		if (SFDCAutomationFW.WaitForElement(xpath,10))
 		{
 			//Thread.sleep(10000L);
