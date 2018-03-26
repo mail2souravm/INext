@@ -13,11 +13,12 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.Select;
 
 public class MemberOfField {
 	String fieldname;
-	ThreadLocal<WebDriver> myWD;
+	ThreadLocal<RemoteWebDriver> myWD;
 	
 	String xpath;
 	List<WebElement> allposblefieldelements;
@@ -514,8 +515,9 @@ public class MemberOfField {
 		{
 		WebElement getsingleWebelement = myWD.get().findElement(By.xpath(xpath));
 		Select s = new Select(getsingleWebelement);
-		String selectAll = Keys.chord(Keys.CONTROL, "a");
-		myWD.get().findElement(By.xpath(xpath)).sendKeys(selectAll);
+		//s.selectByIndex(0);
+		//String selectAll = Keys.chord(Keys.CONTROL, "a");
+		//myWD.get().findElement(By.xpath(xpath)).sendKeys(selectAll);
 		
 		//s.selectByVisibleText(s.getOptions().toString());
 				
@@ -523,7 +525,7 @@ public class MemberOfField {
 		for(WebElement eachOption: options)
 		{
 			//Thread.sleep(3000L);
-			//s.selectByVisibleText(eachOption.getText().trim());
+			s.selectByVisibleText(eachOption.getText().trim());
 			//s.selectByValue(eachOption.getText().trim());			
 			if (allvalues.equals(""))
 			{
@@ -533,6 +535,7 @@ public class MemberOfField {
 			{
 				allvalues = allvalues +","+ eachOption.getText().trim();
 			}
+			myWD.get().findElement(By.xpath(xpath)).sendKeys(Keys.CONTROL);
 		}
 		
 		//getsingleWebelement = myWD.get().findElement(By.xpath("((//*[normalize-space(text())='"+fieldname+"'])[1]/ancestor::td[1])/following-sibling::td[1]/descendant-or-self::*[local-name()='img'][1]"));		
@@ -1568,7 +1571,7 @@ public class MemberOfField {
 	 * @return boolean
 	 * @throws Exception
 	 */
-	public boolean SelectFromLookup(String LookUpValue) throws Exception
+	public  synchronized boolean SelectFromLookup(String LookUpValue) throws Exception
 	{
 		//xpath = "((//*[normalize-space(text())='"+fieldname+"'])[1]/ancestor-or-self::*[local-name()='td' or local-name()='th'][1])/following-sibling::*[local-name()='td' or local-name()='th'][1]/descendant-or-self::span[contains(normalize-space(@class),'lookup')]/input[@type !='hidden'][1]";
 		String parentwindowtitle = "";
@@ -1591,7 +1594,7 @@ public class MemberOfField {
 					getsingleWebelement.clear();
 					getsingleWebelement.sendKeys(LookUpValue);
 					SFDCAutomationFW.PressTABKeyOnWindowAlert();
-					Thread.sleep(6000L);
+					Thread.sleep(3000L);
 					xpath = "((//*[normalize-space(text())='"+fieldname+"'])/ancestor-or-self::*[local-name()='td' or local-name()='th' or local-name()='div'][1])/following-sibling::*[local-name()='td' or local-name()='th' or local-name()='div'][1]/descendant-or-self::span[contains(normalize-space(@class),'lookup')]/descendant-or-self::img[contains(normalize-space(@alt),'New Window')]";			
 					getsingleWebelement = myWD.get().findElement(By.xpath(xpath));
 					getsingleWebelement.click();

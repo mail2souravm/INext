@@ -3,11 +3,12 @@ package SOURCE_CODE;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class MemberOfButton {
 
 	String ButtonName;
-	ThreadLocal<WebDriver> myWD;
+	ThreadLocal<RemoteWebDriver> myWD;
 	SFDCAutomationFW autoFW;
 	String xpath;
 	
@@ -37,10 +38,11 @@ public class MemberOfButton {
 			if(SFDCAutomationFW.WaitForElement(xpath,30))
 			{
 				
-				SFDCAutomationFW.MouseMove(xpath);
+				//SFDCAutomationFW.MouseMove(xpath);
 				//System.out.println("just after mousemove");
-				if (myWD.toString().contains("InternetExplorerDriver") || myWD.toString().contains("SafariDriver"))
+				if (myWD.get().toString().contains("InternetExplorerDriver"))
 				{
+					Thread.sleep(500L);
 					((JavascriptExecutor) myWD.get()).executeScript("arguments[0].click();", myWD.get().findElement(By.xpath(xpath)));
 					System.out.println("Clicked on the button ("+ButtonName+")");
 				
@@ -50,7 +52,7 @@ public class MemberOfButton {
 				{
 					//System.out.println("else condition");
 					myWD.get().findElement(By.xpath(xpath)).click();
-					
+					System.out.println("Clicked on the button ("+ButtonName+")");
 					return true;
 				}
 			}

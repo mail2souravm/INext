@@ -5,12 +5,13 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class MemberOfLink {
 
 	int count = 0;
 	String Link;
-	ThreadLocal<WebDriver> myWD;
+	ThreadLocal<RemoteWebDriver> myWD;
 	
 	String xpath;
 	List<WebElement> we;
@@ -29,6 +30,7 @@ public class MemberOfLink {
 	 */
 	public boolean Click() throws Exception {
 		try {
+			SFDCAutomationFW.WebDriverWaitForElement(myWD.get().findElement(By.linkText(Link)), 10);
 			if (myWD.get().findElement(By.linkText(Link)).isDisplayed()) {
 				myWD.get().findElement(By.linkText(Link)).click();
 				return true;

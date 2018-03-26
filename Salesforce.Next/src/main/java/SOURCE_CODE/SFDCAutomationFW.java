@@ -2,7 +2,9 @@ package SOURCE_CODE;
 
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,7 +27,9 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
@@ -65,7 +69,10 @@ public class SFDCAutomationFW {
 	public static String[][] xlData;
 	public static int counterofthreefailsteps;
 	public static String isGridEnabled;
-	
+	public static boolean flag_driverinstance_chrome = false;
+	public static boolean flag_driverinstance_ff = false;
+	//public static int count_driverinstance_ie = 0;
+	//public static int count_driverinstance_edge = 0;
 	
 	List<WebElement> allposblefieldelements;
 	
@@ -76,18 +83,41 @@ public class SFDCAutomationFW {
 	//public static String Browser = null;
 	public static final ThreadLocal<String> brows = new ThreadLocal<String>();
 	//public static final ThreadLocal<JavascriptExecutor> Javascript = new ThreadLocal<JavascriptExecutor>();
-	public static JavascriptExecutor Javascript;
-	
-	public static final ThreadLocal<WebDriver> myWD = new ThreadLocal<WebDriver>(){
+	public static final ThreadLocal<JavascriptExecutor> Javascript = new ThreadLocal<JavascriptExecutor>(){
         @Override
-        protected WebDriver initialValue()
+        protected JavascriptExecutor initialValue()
+        {
+        	return new JavascriptExecutor() {
+				
+				@Override
+				public Object executeScript(String script, Object... args) {
+					// TODO Auto-generated method stub
+					return null;
+				}
+				
+				@Override
+				public Object executeAsyncScript(String script, Object... args) {
+					// TODO Auto-generated method stub
+					return null;
+				}
+			};
+        }
+    };
+	
+	public static final ThreadLocal<RemoteWebDriver> myWD = new ThreadLocal<RemoteWebDriver>(){
+        @Override
+        protected RemoteWebDriver initialValue()
         {
         	try {
         	if (brows.get().equalsIgnoreCase("chrome"))
     		{
     			System.setProperty("webdriver.chrome.driver","D:\\WS_LI_UI_2017\\OTHERS\\chromedriver.exe");
     			DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-    			return (new ChromeDriver());
+    			System.out.println("creating chromedriver instance");
+    			RemoteWebDriver rwd = new ChromeDriver();
+    			Javascript.set(rwd);
+    			
+    			return (rwd);
     						
     		}
     		else if(brows.get().equalsIgnoreCase("ff") ||brows.get().equalsIgnoreCase("firefox"))
@@ -95,20 +125,32 @@ public class SFDCAutomationFW {
     			
     			System.setProperty("webdriver.gecko.driver","D:\\WS_LI_UI_2017\\OTHERS\\geckodriver.exe");
     			DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-    			return (new FirefoxDriver());
+    			System.out.println("creating ffdriver instance");
+    			RemoteWebDriver rwd = new FirefoxDriver();
+    			Javascript.set(rwd);
+    			
+    			return (rwd);
     		   
     		}
     		else if(brows.get().equalsIgnoreCase("Edge"))
     		{
     			System.setProperty("webdriver.edge.driver","D:\\WS_LI_UI_2017\\OTHERS\\MicrosoftWebDriver.exe");
     			DesiredCapabilities capabilities = DesiredCapabilities.edge();
-    			return (new EdgeDriver());
+    			
+    			RemoteWebDriver rwd = new EdgeDriver();
+    			Javascript.set(rwd);
+    			
+    			return (rwd);
     		}
     		else if(brows.get().equalsIgnoreCase("ie"))
     		{
     			System.setProperty("webdriver.ie.driver", "D:\\WS_LI_UI_2017\\OTHERS\\IEDriverServer.exe");
     			//DesiredCapabilities capabilities = DesiredCapabilities.internetExplorer();
-    			return (new InternetExplorerDriver());
+    			System.out.println("creating iedriver instance");
+    			RemoteWebDriver rwd = new InternetExplorerDriver();
+    			Javascript.set(rwd);
+    			
+    			return (rwd);
     		}
         	
       
@@ -147,6 +189,7 @@ public class SFDCAutomationFW {
 			brows.set(browser);
 			myWD.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			myWD.get().navigate().to(URL);
+			myWD.get().manage().window().maximize();
 			return true;
 		
 		}catch(Exception e)
@@ -157,13 +200,51 @@ public class SFDCAutomationFW {
 		
 	}
 	
-
+	/**
+	 * @param element
+	 * @Description Scroll vertically/ horizontally to make the element visible on the screen. 
+	 * @throws Exception
+	 */
+	public static void ScrollToElement(WebElement element) throws Exception
+	{
+		
+		try
+		{
+			Javascript.get().executeScript("arguments[0].scrollIntoView();", element);
+			
+			//Coordinates coordinate = ((Locatable) element).getCoordinates();
+			//Point cord = element.getLocation();
+			//cord.getY();
+			//- 300;
+			//Locatable
+						
+			//Point coordinates = element.getLocation();
+			
+			//Robot robot = new Robot();
+			//robot.mouseWheel(1);
+			
+			
+			
+			//coordinate.onPage();
+			//coordinate.onScreen();
+			//coordinate.inViewPort();
+					
+			System.out.println("Successfully scrolled untill element.");
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			System.out.println("Unable to scroll until elemnt");
+		}
+	}
+	
 	public static boolean LoginToSFDC(String un,String pw) throws Exception
 	{
 		try
 		{
 			
-		Javascript = (JavascriptExecutor) myWD.get();	
+		//Javascript = (JavascriptExecutor) myWD.get();	
 			
 		System.out.println("javascript:"+Javascript.toString());	
 			
@@ -181,16 +262,35 @@ public class SFDCAutomationFW {
 		
 		Thread.sleep(5000L);		
 			
-		if((myWD.get().toString().contains("ChromeDriver")) ||(myWD.get().toString().contains("FirefoxDriver")))
+		System.out.println("count_driverinstance_chrome: "+flag_driverinstance_chrome);
+		System.out.println("count_driverinstance_ff: "+flag_driverinstance_ff);
+		//System.out.println("count_driverinstance_ie: "+count_driverinstance_ie);
+		
+		if(!(myWD.get().toString().contains("InternetExplorer")))
 		{
+			if((myWD.get().toString().contains("FirefoxDriver") &&  flag_driverinstance_ff == false) 
+											||
+				(myWD.get().toString().contains("ChromeDriver") &&  flag_driverinstance_chrome == false))
+			{
+			WaitForElement("//a[text()='No Thanks'][1]", 10);
 			myWD.get().findElement(By.xpath("//a[text()='No Thanks'][1]")).click();
 			Thread.sleep(3000L);
 			myWD.get().findElement(By.xpath("//label[@for='lex-checkbox-7'][1]/span[1]")).click();
 			Thread.sleep(2000L);
 			myWD.get().findElement(By.xpath("//input[@title='Send to Salesforce'][1]")).click();
-		
+			}
+			if(myWD.get().toString().contains("ChromeDriver"))
+			{
+				flag_driverinstance_chrome = true;
+			}
+			if(myWD.get().toString().contains("FirefoxDriver"))
+			{
+				flag_driverinstance_ff = true;
+			}
+			
+			
 		}
-		
+		Thread.sleep(2000L);
 		WebDriverWaitForElement("//a[contains(normalize-space(text()),'Home')]", 30);
 		return true;
 		}catch(Exception e)
@@ -199,6 +299,19 @@ public class SFDCAutomationFW {
 			return false;
 		}
 		
+}
+	
+public static ThreadLocal<RemoteWebDriver> GetDriver() throws Exception
+{
+	try {
+		
+		return myWD; 
+				
+	}catch(Exception e)
+	{
+		e.printStackTrace();
+		return null;
+	}
 }
 	
 public static WebElement WebDriverWaitForElement(String xpath, long waitingTimeinsec) throws Exception
@@ -213,6 +326,21 @@ public static WebElement WebDriverWaitForElement(String xpath, long waitingTimei
      	{
      		e.printStackTrace();
      		return element;
+    	 
+     	}
+ }
+public static WebElement WebDriverWaitForElement(WebElement elmnt, long waitingTimeinsec) throws Exception
+{
+	
+    try {
+    	 	WebDriverWait wait = new WebDriverWait(myWD.get(), waitingTimeinsec);
+    	 	
+    	 	return wait.until(ExpectedConditions.elementToBeClickable(elmnt));
+       	 }
+     	catch(Exception e)
+     	{
+     		e.printStackTrace();
+     		return null;
     	 
      	}
  }
@@ -245,7 +373,7 @@ public static void WaitForPageToLoad(int timeOutInSeconds) throws Exception
 		} 
 		
 		
-		if (Javascript.executeScript(command).toString().equals("complete"))
+		if (Javascript.get().executeScript(command).toString().equals("complete"))	
 		{ 
 			//System.out.println("Inside WaitForPageToLoad(Success)");
 			break; 
@@ -268,14 +396,18 @@ public static void WaitForPageToLoad(int timeOutInSeconds) throws Exception
  * @Description Logs out from sales force 
  * @Date Aug 7, 2014
  */
-public static void LogOff() throws Exception
+public static synchronized void LogOff() throws Exception
 {
 	try 
 	{
 	String xp = "//span[@id='userNavLabel' and normalize-space(@class)='menuButtonLabel']";
-	//WaitForPageToLoad(15);
+	WaitForPageToLoad(15);
+	
+	
 	WaitForElement(xp,15);
 	myWD.get().findElement(By.xpath(xp)).click();
+	
+	WaitForElement("//a[contains(@href,'logout.jsp')][1]", 10);
 	
 	myWD.get().findElement(By.xpath("//a[contains(@href,'logout.jsp')][1]")).click();
 	
@@ -302,6 +434,47 @@ public static void LogOff() throws Exception
 		
 	}
 }
+
+/**
+ * @throws Exception
+ */
+public static void Close() throws Exception
+{
+	try 
+	{
+	WaitForPageToLoad(10);
+	myWD.get().close();
+	
+	System.out.println("Closed focused browser");
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+		System.out.println("Unable to close driver instance.");
+		
+		
+	}
+}
+
+public static void Quit() throws Exception
+{
+	try 
+	{
+	WaitForPageToLoad(10);
+	myWD.get().quit();
+	
+	System.out.println("Closed webdriver instance");
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+		System.out.println("Unable to close driver instance.");
+		
+		
+	}
+}
+
+
 
 /**
  * @author Sourav Mukherjee
@@ -537,7 +710,7 @@ public static boolean CloseWindow(String UniqueStringinWindowTitle) throws Excep
  */
 public static void HighLight(WebElement webe) throws Exception
 {
-	Javascript.executeScript("arguments[0].setAttribute('style', arguments[1]);", webe, "color: green; border: 2px solid green;");
+	Javascript.get().executeScript("arguments[0].setAttribute('style', arguments[1]);", webe, "color: green; border: 2px solid green;");
 }
 
 /**
@@ -685,5 +858,226 @@ public static MemberOfField Field(String FieldName) throws Exception
 	return new MemberOfField(FieldName);
 }
 
+
+/**
+ * @author Sourav Mukherjee
+ * @Param serviceName
+ * @return void
+ * @throws Exception
+ * @Description Kills the running process 
+ * @Date Aug 7, 2014
+ */
+private static final String TASKLIST = "tasklist";
+private static final String KILL = "taskkill /F /IM ";
+
+public boolean _isProcessRunning(String serviceName) throws Exception {
+
+ Process p = Runtime.getRuntime().exec(TASKLIST);
+ BufferedReader reader = new BufferedReader(new InputStreamReader(
+   p.getInputStream()));
+ String line;
+ while ((line = reader.readLine()) != null) {
+
+  System.out.println(line);
+  if (line.contains(serviceName)) {
+   return true;
+  }
+ }
+
+ return false;
+
+}
+
+public static void _killProcess(String serviceName) throws Exception {
+
+  Runtime.getRuntime().exec(KILL + serviceName);
+
+ }
+
+/**
+* @author Cognizant
+ * @param Year
+ * @param Month
+ * @param Date
+ * @return true of the date is selected successfully else return false
+ * @Description You should click on the date lookup field to enable the OOB date lookup, then only you can call this function to select any specific date by year,month and date
+ * @throws Exception
+ */
+public static synchronized boolean SelectFromDateLookup(String Year,String Month,String Date) throws Exception
+{
+	try
+	{
+		//myWD.findElement(By.xpath("//div[normalize-space(@class)='datePicker' and contains(normalize-space(@style),'block')][1]/descendant-or-self::td[contains(normalize-space(@class),'selectedDate')][1]")).click();
+		
+		//Selecting the Year as supplied
+		Year = Year.replace(".0", "").replace(".00", "");
+		Date = Date.replace(".0", "").replace(".00", "");
+		ScrollToElement(myWD.get().findElement(By.xpath("//div[normalize-space(@class)='datePicker' and contains(normalize-space(@style),'block')][1]/descendant-or-self::select[@title='Year'][1]")));
+		WaitForElement("//div[normalize-space(@class)='datePicker' and contains(normalize-space(@style),'block')][1]/descendant-or-self::select[@title='Year'][1]", 10);
+		WebElement getsingleWebelement = myWD.get().findElement(By.xpath("//div[normalize-space(@class)='datePicker' and contains(normalize-space(@style),'block')][1]/descendant-or-self::select[@title='Year'][1]"));
+		Select s = new Select(getsingleWebelement);
+		s.selectByVisibleText(Year);
+		
+		System.out.println("Month is:"+Month);
+		//Selecting the Month as supplied
+		getsingleWebelement = myWD.get().findElement(By.xpath("//div[normalize-space(@class)='datePicker' and contains(normalize-space(@style),'block')][1]/descendant-or-self::select[@title='Month'][1]"));
+		s = new Select(getsingleWebelement);
+		s.selectByVisibleText(Month);
+		
+		
+		//Selecting the Date as supplied
+		if(Date.substring(0, 1).equals("0"))
+		{
+			Date = Date.replace("0", "");
+		}
+		myWD.get().findElement(By.xpath("//div[normalize-space(@class)='datePicker' and contains(normalize-space(@style),'block')][1]/descendant-or-self::table[normalize-space(@class)='calDays'][1]/descendant-or-self::td[normalize-space(text())='"+Date+"'][1]")).click();
+		
+		
+		System.out.println("Supplied date value ("+Date+" "+Month+" "+Year+") is selected from date lookup.");
+		AddToXLLogs("Supplied date value ("+Date+" "+Month+" "+Year+") is selected from date lookup.", "Pass");
+		return true;
+		
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+		System.out.println();
+		AddToXLLogs("Unable to select the supplied date from SFDC Date lookup.", "Fail");
+		return false;
+	}
+	
+}
+
+/**
+
+ */
+/**
+ * @author Cognizant
+ * @Description This function selects a date from Salesforce date lookup as per supplied parameter.
+ * @param nextdaycount starts from 0,1,2 i.e. today,tomorrow,day after tomorrow so on.
+ * @return
+ * @throws Exception
+ */
+public static synchronized boolean SelectFromDateLookup(int nextdaycount) throws Exception
+{
+	try
+	{
+		//selecting today's date
+		if(nextdaycount == 0)
+		{
+			Calendar cal = Calendar.getInstance();
+			SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy");
+			String D = sdf.format(cal.getTime()).toString().substring(0, sdf.format(cal.getTime()).toString().indexOf(" ")).trim();
+			List<String> DMY = new ArrayList();
+			for (String val: sdf.format(cal.getTime()).toString().split(" ", 3))
+			{
+				DMY.add(val);
+		         
+		    }
+			for(int i=0;i<DMY.size();i++)
+			{
+				System.out.println(DMY.get(i));
+			}
+			
+			sfdc.SelectFromDateLookup(DMY.get(2),DMY.get(1),DMY.get(0));
+							
+			
+		}
+		//Selecting today + nextdaycount 
+		if (nextdaycount > 0)
+		{
+			String DAY="",mon="";
+			Calendar cal = Calendar.getInstance();
+			SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy");
+			String D = sdf.format(cal.getTime()).toString().substring(0, sdf.format(cal.getTime()).toString().indexOf(" ")).trim();
+			List<String> DMY = new ArrayList();
+			for (String val: sdf.format(cal.getTime()).toString().split(" ", 3))
+			{
+				DMY.add(val);
+		         
+		    }
+			String month = DMY.get(1);
+			int totaldaycount = Integer.valueOf(DMY.get(0)).intValue() + nextdaycount;
+			System.out.println("totaldaycount");
+			//Calculating 31 day month and the related day
+			if (DMY.get(1).contains("Jan") ||DMY.get(1).contains("Mar")||DMY.get(1).contains("May")||DMY.get(1).contains("Jul")||DMY.get(1).contains("Aug")||DMY.get(1).contains("Oct")||DMY.get(1).contains("Dec"))
+			{
+				if(totaldaycount>31)
+				{
+					Calendar currentMonth = Calendar.getInstance();
+					SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM");
+					currentMonth.add(Calendar.MONTH, 1);
+					mon = dateFormat.format(currentMonth.getTime());
+					int day = totaldaycount - 31;
+					DAY = Integer.toString(day);
+					
+				}
+				else
+				{
+					Calendar currentMonth = Calendar.getInstance();
+					SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM");
+					mon = dateFormat.format(currentMonth.getTime());
+					int day = totaldaycount;
+					DAY = Integer.toString(day);
+					
+				}
+			}
+			//Calculating 30 day month and the related day
+			if (DMY.get(1).contains("Apr") ||DMY.get(1).contains("Jun")||DMY.get(1).contains("Sep")||DMY.get(1).contains("Nov")) 
+			{
+				if(totaldaycount>30) 
+				{
+					Calendar currentMonth = Calendar.getInstance();
+					SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM");
+					currentMonth.add(Calendar.MONTH, 1);
+					mon = dateFormat.format(currentMonth.getTime());
+					int day = totaldaycount - 30;
+					DAY = Integer.toString(day);
+					
+				}
+				else
+				{
+					Calendar currentMonth = Calendar.getInstance();
+					SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM");
+					//currentMonth.add(Calendar.MONTH, 1);
+					mon = dateFormat.format(currentMonth.getTime());
+					int day = totaldaycount;
+					DAY = Integer.toString(day);
+				}
+			}
+			//Calculating 28 day month and the related day
+			if (DMY.get(1).contains("Feb")  && (totaldaycount>28) ) 
+			{
+				Calendar currentMonth = Calendar.getInstance();
+				SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM");
+				currentMonth.add(Calendar.MONTH, 1);
+		        mon = dateFormat.format(currentMonth.getTime());
+		        int day = totaldaycount - 28;
+		        DAY = Integer.toString(day);
+		        
+			}
+			//Calculating 28 day month and the related day
+			if (DMY.get(1).contains("Feb")  && (totaldaycount<28) ) 
+			{
+				Calendar currentMonth = Calendar.getInstance();
+				SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM");
+				currentMonth.add(Calendar.MONTH, 1);
+		        mon = dateFormat.format(currentMonth.getTime());
+		        int day = totaldaycount;
+		        DAY = Integer.toString(day);
+		        
+			}
+			System.out.println("Date Value Selected was: "+DMY.get(2)+" "+mon+" "+DAY);
+			sfdc.SelectFromDateLookup(DMY.get(2),mon,DAY);
+		}
+		return true;
+		
+	}
+	catch(Exception e)
+	{
+		
+		return false;
+	}
+}
 
 }

@@ -1,50 +1,132 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="0" total="3" passed="3">
+<testng-results skipped="0" failed="0" ignored="0" total="9" passed="9">
   <reporter-output>
   </reporter-output>
-  <suite name="Suite" duration-ms="36783" started-at="2018-03-23T07:47:01Z" finished-at="2018-03-23T07:47:38Z">
+  <suite name="Suite" duration-ms="128616" started-at="2018-03-26T05:24:58Z" finished-at="2018-03-26T05:27:06Z">
     <groups>
     </groups>
-    <test name="IETest" duration-ms="36783" started-at="2018-03-23T07:47:01Z" finished-at="2018-03-23T07:47:38Z">
-      <class name="USER_SPACE.TestScripts.M1.TC03">
-        <test-method status="PASS" signature="MyTestScenario(java.lang.String)[pri:0, instance:USER_SPACE.TestScripts.M1.TC03@13167f4]" name="MyTestScenario" duration-ms="32649" started-at="2018-03-23T07:47:01Z" finished-at="2018-03-23T07:47:34Z">
+    <test name="ChromeTest" duration-ms="116245" started-at="2018-03-26T05:24:58Z" finished-at="2018-03-26T05:26:54Z">
+      <class name="USER_SPACE.TestScripts.M1.TC_CreateAccount">
+        <test-method status="PASS" signature="MyTestScenario(java.lang.String)[pri:0, instance:USER_SPACE.TestScripts.M1.TC_CreateAccount@eebfca]" name="MyTestScenario" duration-ms="40303" started-at="2018-03-26T05:25:44Z" finished-at="2018-03-26T05:26:25Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[chrome]]>
+                <![CDATA[Chrome]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- MyTestScenario -->
-      </class> <!-- USER_SPACE.TestScripts.M1.TC03 -->
-      <class name="USER_SPACE.TestScripts.M1.TC01">
-        <test-method status="PASS" signature="MyTestScenario(java.lang.String)[pri:0, instance:USER_SPACE.TestScripts.M1.TC01@1f99a05]" name="MyTestScenario" duration-ms="36752" started-at="2018-03-23T07:47:01Z" finished-at="2018-03-23T07:47:38Z">
+      </class> <!-- USER_SPACE.TestScripts.M1.TC_CreateAccount -->
+      <class name="USER_SPACE.TestScripts.M1.TC_CreateOpportunity">
+        <test-method status="PASS" signature="MyTestScenario(java.lang.String)[pri:0, instance:USER_SPACE.TestScripts.M1.TC_CreateOpportunity@718207]" name="MyTestScenario" duration-ms="29134" started-at="2018-03-26T05:26:25Z" finished-at="2018-03-26T05:26:54Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[chrome]]>
+                <![CDATA[Chrome]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- MyTestScenario -->
-      </class> <!-- USER_SPACE.TestScripts.M1.TC01 -->
-      <class name="USER_SPACE.TestScripts.M1.TC02">
-        <test-method status="PASS" signature="MyTestScenario(java.lang.String)[pri:0, instance:USER_SPACE.TestScripts.M1.TC02@a3e297]" name="MyTestScenario" duration-ms="35073" started-at="2018-03-23T07:47:01Z" finished-at="2018-03-23T07:47:37Z">
+      </class> <!-- USER_SPACE.TestScripts.M1.TC_CreateOpportunity -->
+      <class name="USER_SPACE.TestScripts.M1.TC_CreateLead">
+        <test-method status="PASS" signature="MyTestScenario(java.lang.String)[pri:0, instance:USER_SPACE.TestScripts.M1.TC_CreateLead@ac3dc3]" name="MyTestScenario" duration-ms="46755" started-at="2018-03-26T05:24:58Z" finished-at="2018-03-26T05:25:44Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[chrome]]>
+                <![CDATA[Chrome]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- MyTestScenario -->
-      </class> <!-- USER_SPACE.TestScripts.M1.TC02 -->
+      </class> <!-- USER_SPACE.TestScripts.M1.TC_CreateLead -->
+    </test> <!-- ChromeTest -->
+    <test name="FirefoxTest" duration-ms="122181" started-at="2018-03-26T05:24:58Z" finished-at="2018-03-26T05:27:00Z">
+      <class name="USER_SPACE.TestScripts.M1.TC_CreateAccount">
+        <test-method status="PASS" signature="MyTestScenario(java.lang.String)[pri:0, instance:USER_SPACE.TestScripts.M1.TC_CreateAccount@1c2b765]" name="MyTestScenario" duration-ms="40024" started-at="2018-03-26T05:25:47Z" finished-at="2018-03-26T05:26:27Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Firefox]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- MyTestScenario -->
+      </class> <!-- USER_SPACE.TestScripts.M1.TC_CreateAccount -->
+      <class name="USER_SPACE.TestScripts.M1.TC_CreateOpportunity">
+        <test-method status="PASS" signature="MyTestScenario(java.lang.String)[pri:0, instance:USER_SPACE.TestScripts.M1.TC_CreateOpportunity@1881071]" name="MyTestScenario" duration-ms="32511" started-at="2018-03-26T05:26:27Z" finished-at="2018-03-26T05:27:00Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Firefox]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- MyTestScenario -->
+      </class> <!-- USER_SPACE.TestScripts.M1.TC_CreateOpportunity -->
+      <class name="USER_SPACE.TestScripts.M1.TC_CreateLead">
+        <test-method status="PASS" signature="MyTestScenario(java.lang.String)[pri:0, instance:USER_SPACE.TestScripts.M1.TC_CreateLead@81cdd1]" name="MyTestScenario" duration-ms="49594" started-at="2018-03-26T05:24:58Z" finished-at="2018-03-26T05:25:47Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Firefox]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- MyTestScenario -->
+      </class> <!-- USER_SPACE.TestScripts.M1.TC_CreateLead -->
+    </test> <!-- FirefoxTest -->
+    <test name="IETest" duration-ms="128616" started-at="2018-03-26T05:24:58Z" finished-at="2018-03-26T05:27:06Z">
+      <class name="USER_SPACE.TestScripts.M1.TC_CreateAccount">
+        <test-method status="PASS" signature="MyTestScenario(java.lang.String)[pri:0, instance:USER_SPACE.TestScripts.M1.TC_CreateAccount@a3e297]" name="MyTestScenario" duration-ms="46567" started-at="2018-03-26T05:25:34Z" finished-at="2018-03-26T05:26:21Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[ie]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- MyTestScenario -->
+      </class> <!-- USER_SPACE.TestScripts.M1.TC_CreateAccount -->
+      <class name="USER_SPACE.TestScripts.M1.TC_CreateOpportunity">
+        <test-method status="PASS" signature="MyTestScenario(java.lang.String)[pri:0, instance:USER_SPACE.TestScripts.M1.TC_CreateOpportunity@13167f4]" name="MyTestScenario" duration-ms="45259" started-at="2018-03-26T05:26:21Z" finished-at="2018-03-26T05:27:06Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[ie]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- MyTestScenario -->
+      </class> <!-- USER_SPACE.TestScripts.M1.TC_CreateOpportunity -->
+      <class name="USER_SPACE.TestScripts.M1.TC_CreateLead">
+        <test-method status="PASS" signature="MyTestScenario(java.lang.String)[pri:0, instance:USER_SPACE.TestScripts.M1.TC_CreateLead@1f99a05]" name="MyTestScenario" duration-ms="36740" started-at="2018-03-26T05:24:58Z" finished-at="2018-03-26T05:25:34Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[ie]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- MyTestScenario -->
+      </class> <!-- USER_SPACE.TestScripts.M1.TC_CreateLead -->
     </test> <!-- IETest -->
   </suite> <!-- Suite -->
 </testng-results>

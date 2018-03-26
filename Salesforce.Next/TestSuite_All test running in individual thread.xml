@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Suite" thread-count="3" parallel="tests">
+ <test name="IETest">
+  	<parameter name="browser" value="ie">
+    	<classes>
+      		 <class name="USER_SPACE.TestScripts.M1.TC_CreateLead"/>      		 
+    	</classes>
+    </parameter>
+  </test> <!-- Test -->  
+  <test name="ChromeTest">
+  	<parameter name="browser" value="Chrome">
+    	<classes>
+      		 <class name="USER_SPACE.TestScripts.M1.TC_CreateLead"/>     		 
+    	</classes>
+    </parameter>
+  </test> <!-- Test -->
+  <test name="FirefoxTest">
+  	<parameter name="browser" value="Firefox">
+    	<classes>
+      		 <class name="USER_SPACE.TestScripts.M1.TC_CreateOpportunity"/>
+      	</classes>
+    </parameter>
+  </test> <!-- Test -->
+ 
+ 
+ <test name="IETest2">
+  	<parameter name="browser" value="ie">
+    	<classes>
+      		 <class name="USER_SPACE.TestScripts.M1.TC_CreateOpportunity"/>      		 
+    	</classes>
+    </parameter>
+  </test> <!-- Test -->  
+  <test name="ChromeTest2">
+  	<parameter name="browser" value="Chrome">
+    	<classes>
+      		 <class name="USER_SPACE.TestScripts.M1.TC_CreateOpportunity"/>      		 
+    	</classes>
+    </parameter>
+  </test> <!-- Test -->
+  <test name="FirefoxTest2">
+  	<parameter name="browser" value="Firefox">
+    	<classes>
+      		 <class name="USER_SPACE.TestScripts.M1.TC_CreateLead"/>
+      	</classes>
+    </parameter>
+  </test> <!-- Test -->
+  
+  <test name="IETest3">
+  	<parameter name="browser" value="ie">
+    	<classes>
+      		 <class name="USER_SPACE.TestScripts.M1.TC_CreateAccount"/>      		 
+    	</classes>
+    </parameter>
+  </test> <!-- Test -->  
+  <test name="ChromeTest3">
+  	<parameter name="browser" value="Chrome">
+    	<classes>
+      		 <class name="USER_SPACE.TestScripts.M1.TC_CreateAccount"/>      		 
+    	</classes>
+    </parameter>
+  </test> <!-- Test -->
+  <test name="FirefoxTest3">
+  	<parameter name="browser" value="Firefox">
+    	<classes>
+      		 <class name="USER_SPACE.TestScripts.M1.TC_CreateAccount"/>
+      	</classes>
+    </parameter>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->
