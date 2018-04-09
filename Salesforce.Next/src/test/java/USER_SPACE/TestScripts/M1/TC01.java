@@ -9,18 +9,19 @@ import USER_SPACE.ObjectRepository.LeadScreen;
 public class TC01 {
 
 	public static final ThreadLocal<String> brow = new ThreadLocal<String>();
+	public static final ThreadLocal<String> grid = new ThreadLocal<String>();
 	public static final ThreadLocal<SFDCAutomationFW> sfdc = new ThreadLocal<SFDCAutomationFW>(){@Override protected SFDCAutomationFW initialValue(){return (new SFDCAutomationFW());}};
 	
 
-	@Parameters("browser")
+	@Parameters({ "browser", "isgrid" })
 	@Test
-	public void MyTestScenario(String browser) throws Exception 
+	public void MyTestScenario(String browser, String isgrid) throws Exception 
 	{
 		
 		brow.set(browser);
-		
+		grid.set(isgrid);
 		System.out.println("from TC01 --> Browser:"+brow.get());
-		sfdc.get().OpenURL(null, "https://login.salesforce.com", brow.get());
+		sfdc.get().OpenURL(null, "https://login.salesforce.com", brow.get(),grid.get());
 		sfdc.get().LoginToSFDC("mail2souravm@gmail.com","Welcome400");
 		sfdc.get().Link("Leads").Click();
 		LeadScreen.NewButton().Click();

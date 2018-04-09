@@ -2,12 +2,14 @@ package SOURCE_CODE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -165,7 +167,8 @@ public class MemberOfField {
 			//System.out.println("Inside Type:"+allposblefieldelements.size());
 			getsingleWebelement.clear();
 			getsingleWebelement.sendKeys(Value);
-		
+			
+			
 			//System.out.println("TagName:"+getsingleWebelement.getTagName()+"|"+"class:"+getsingleWebelement.getAttribute("class")+"|"+"id:"+getsingleWebelement.getAttribute("id")+"|"+"type:"+getsingleWebelement.getAttribute("type")+"|"+"text:"+getsingleWebelement.getText()+"|");
 		/*
 		for(WebElement we1:allposblefieldelements)

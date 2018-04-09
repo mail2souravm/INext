@@ -35,7 +35,7 @@ public class MemberOfButton {
 		try
 		{
 			//Thread.sleep(2000L);
-			if(SFDCAutomationFW.WaitForElement(xpath,30))
+			if(SFDCAutomationFW.WaitForElement(xpath,60))
 			{
 				
 				//SFDCAutomationFW.MouseMove(xpath);
