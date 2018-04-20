@@ -1,64 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite thread-count="3" guice-stage="DEVELOPMENT" name="Failed suite [Suite]" parallel="tests">
-  <test thread-count="3" name="FirefoxTest(failed)" parallel="tests">
-    <parameter name="browser" value="Firefox"/>
-    <classes>
-      <class name="USER_SPACE.TestScripts.M1.TC_CreateAccount">
-        <methods>
-          <include name="MyTestScenario"/>
-        </methods>
-      </class> <!-- USER_SPACE.TestScripts.M1.TC_CreateAccount -->
-      <class name="USER_SPACE.TestScripts.M1.TC_CreateLead">
-        <methods>
-          <include name="MyTestScenario"/>
-        </methods>
-      </class> <!-- USER_SPACE.TestScripts.M1.TC_CreateLead -->
-      <class name="USER_SPACE.TestScripts.M1.TC_CreateOpportunity">
-        <methods>
-          <include name="MyTestScenario"/>
-        </methods>
-      </class> <!-- USER_SPACE.TestScripts.M1.TC_CreateOpportunity -->
-    </classes>
-  </test> <!-- FirefoxTest(failed) -->
   <test thread-count="3" name="IETest(failed)" parallel="tests">
+    <parameter name="isgrid" value="no"/>
+    <parameter name="appium_host_url" value="NA"/>
     <parameter name="browser" value="ie"/>
+    <parameter name="devicename" value="NA"/>
+    <parameter name="udid" value="NA"/>
+    <parameter name="version" value="NA"/>
+    <parameter name="platform" value="Windows"/>
     <classes>
-      <class name="USER_SPACE.TestScripts.M1.TC_CreateAccount">
-        <methods>
-          <include name="MyTestScenario"/>
-        </methods>
-      </class> <!-- USER_SPACE.TestScripts.M1.TC_CreateAccount -->
       <class name="USER_SPACE.TestScripts.M1.TC_CreateLead">
         <methods>
-          <include name="MyTestScenario"/>
+          <include name="MyTestScenario" invocation-numbers="0"/>
         </methods>
       </class> <!-- USER_SPACE.TestScripts.M1.TC_CreateLead -->
-      <class name="USER_SPACE.TestScripts.M1.TC_CreateOpportunity">
-        <methods>
-          <include name="MyTestScenario"/>
-        </methods>
-      </class> <!-- USER_SPACE.TestScripts.M1.TC_CreateOpportunity -->
     </classes>
   </test> <!-- IETest(failed) -->
-  <test thread-count="3" name="ChromeTest(failed)" parallel="tests">
-    <parameter name="browser" value="Chrome"/>
-    <classes>
-      <class name="USER_SPACE.TestScripts.M1.TC_CreateAccount">
-        <methods>
-          <include name="MyTestScenario"/>
-        </methods>
-      </class> <!-- USER_SPACE.TestScripts.M1.TC_CreateAccount -->
-      <class name="USER_SPACE.TestScripts.M1.TC_CreateLead">
-        <methods>
-          <include name="MyTestScenario"/>
-        </methods>
-      </class> <!-- USER_SPACE.TestScripts.M1.TC_CreateLead -->
-      <class name="USER_SPACE.TestScripts.M1.TC_CreateOpportunity">
-        <methods>
-          <include name="MyTestScenario"/>
-        </methods>
-      </class> <!-- USER_SPACE.TestScripts.M1.TC_CreateOpportunity -->
-    </classes>
-  </test> <!-- ChromeTest(failed) -->
 </suite> <!-- Failed suite [Suite] -->

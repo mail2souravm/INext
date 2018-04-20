@@ -1,22 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
+<testng-results skipped="0" failed="0" ignored="0" total="6" passed="6">
   <reporter-output>
   </reporter-output>
-  <suite name="Suite" duration-ms="131886" started-at="2018-04-06T17:45:53Z" finished-at="2018-04-06T17:48:05Z">
+  <suite name="Suite" duration-ms="99031" started-at="2018-04-19T12:28:20Z" finished-at="2018-04-19T12:29:59Z">
     <groups>
     </groups>
-    <test name="AndroidTest" duration-ms="131886" started-at="2018-04-06T17:45:53Z" finished-at="2018-04-06T17:48:05Z">
-      <class name="USER_SPACE.TestScripts.M1.TC_CreateLead">
-        <test-method status="PASS" signature="MyTestScenario(java.lang.String, java.lang.String)[pri:0, instance:USER_SPACE.TestScripts.M1.TC_CreateLead@71e53b]" name="MyTestScenario" duration-ms="131855" started-at="2018-04-06T17:45:54Z" finished-at="2018-04-06T17:48:05Z">
+    <test name="ChromeTest" duration-ms="97862" started-at="2018-04-19T12:28:20Z" finished-at="2018-04-19T12:29:57Z">
+      <class name="USER_SPACE.TestScripts.M1.TC_ConvertLead">
+        <test-method status="PASS" signature="MyTestScenario(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:USER_SPACE.TestScripts.M1.TC_ConvertLead@2663d3]" name="MyTestScenario" duration-ms="27052" started-at="2018-04-19T12:29:30Z" finished-at="2018-04-19T12:29:57Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[android]]>
+                <![CDATA[no]]>
               </value>
             </param>
             <param index="1">
               <value>
-                <![CDATA[yes]]>
+                <![CDATA[Chrome]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[Windows]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[NA]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[NA]]>
+              </value>
+            </param>
+            <param index="5">
+              <value>
+                <![CDATA[NA]]>
+              </value>
+            </param>
+            <param index="6">
+              <value>
+                <![CDATA[NA]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- MyTestScenario -->
+      </class> <!-- USER_SPACE.TestScripts.M1.TC_ConvertLead -->
+      <class name="USER_SPACE.TestScripts.M1.TC_CreateLead">
+        <test-method status="PASS" signature="MyTestScenario(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:USER_SPACE.TestScripts.M1.TC_CreateLead@bf3d14]" name="MyTestScenario" duration-ms="70774" started-at="2018-04-19T12:28:20Z" finished-at="2018-04-19T12:29:30Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[no]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[Chrome]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[Windows]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[NA]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[NA]]>
+              </value>
+            </param>
+            <param index="5">
+              <value>
+                <![CDATA[NA]]>
+              </value>
+            </param>
+            <param index="6">
+              <value>
+                <![CDATA[NA]]>
               </value>
             </param>
           </params>
@@ -24,6 +92,182 @@
           </reporter-output>
         </test-method> <!-- MyTestScenario -->
       </class> <!-- USER_SPACE.TestScripts.M1.TC_CreateLead -->
-    </test> <!-- AndroidTest -->
+    </test> <!-- ChromeTest -->
+    <test name="FirefoxTest" duration-ms="98680" started-at="2018-04-19T12:28:20Z" finished-at="2018-04-19T12:29:58Z">
+      <class name="USER_SPACE.TestScripts.M1.TC_ConvertLead">
+        <test-method status="PASS" signature="MyTestScenario(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:USER_SPACE.TestScripts.M1.TC_ConvertLead@10a87b3]" name="MyTestScenario" duration-ms="26208" started-at="2018-04-19T12:29:32Z" finished-at="2018-04-19T12:29:58Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[no]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[ff]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[Windows]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[NA]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[NA]]>
+              </value>
+            </param>
+            <param index="5">
+              <value>
+                <![CDATA[NA]]>
+              </value>
+            </param>
+            <param index="6">
+              <value>
+                <![CDATA[NA]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- MyTestScenario -->
+      </class> <!-- USER_SPACE.TestScripts.M1.TC_ConvertLead -->
+      <class name="USER_SPACE.TestScripts.M1.TC_CreateLead">
+        <test-method status="PASS" signature="MyTestScenario(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:USER_SPACE.TestScripts.M1.TC_CreateLead@f7c8c1]" name="MyTestScenario" duration-ms="72437" started-at="2018-04-19T12:28:20Z" finished-at="2018-04-19T12:29:32Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[no]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[ff]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[Windows]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[NA]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[NA]]>
+              </value>
+            </param>
+            <param index="5">
+              <value>
+                <![CDATA[NA]]>
+              </value>
+            </param>
+            <param index="6">
+              <value>
+                <![CDATA[NA]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- MyTestScenario -->
+      </class> <!-- USER_SPACE.TestScripts.M1.TC_CreateLead -->
+    </test> <!-- FirefoxTest -->
+    <test name="IETest" duration-ms="99031" started-at="2018-04-19T12:28:20Z" finished-at="2018-04-19T12:29:59Z">
+      <class name="USER_SPACE.TestScripts.M1.TC_ConvertLead">
+        <test-method status="PASS" signature="MyTestScenario(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:USER_SPACE.TestScripts.M1.TC_ConvertLead@1cd19b3]" name="MyTestScenario" duration-ms="30215" started-at="2018-04-19T12:29:28Z" finished-at="2018-04-19T12:29:59Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[no]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[ie]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[Windows]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[NA]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[NA]]>
+              </value>
+            </param>
+            <param index="5">
+              <value>
+                <![CDATA[NA]]>
+              </value>
+            </param>
+            <param index="6">
+              <value>
+                <![CDATA[NA]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- MyTestScenario -->
+      </class> <!-- USER_SPACE.TestScripts.M1.TC_ConvertLead -->
+      <class name="USER_SPACE.TestScripts.M1.TC_CreateLead">
+        <test-method status="PASS" signature="MyTestScenario(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:USER_SPACE.TestScripts.M1.TC_CreateLead@4062d]" name="MyTestScenario" duration-ms="68781" started-at="2018-04-19T12:28:20Z" finished-at="2018-04-19T12:29:28Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[no]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[ie]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[Windows]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[NA]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[NA]]>
+              </value>
+            </param>
+            <param index="5">
+              <value>
+                <![CDATA[NA]]>
+              </value>
+            </param>
+            <param index="6">
+              <value>
+                <![CDATA[NA]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- MyTestScenario -->
+      </class> <!-- USER_SPACE.TestScripts.M1.TC_CreateLead -->
+    </test> <!-- IETest -->
   </suite> <!-- Suite -->
 </testng-results>

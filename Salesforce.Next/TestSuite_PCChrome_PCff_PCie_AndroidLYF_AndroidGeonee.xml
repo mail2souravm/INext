@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Suite" thread-count="5" parallel="tests">
+   
+   <test name="ChromeTest">
+  	<parameter name="isgrid" value="yes" />
+  	<parameter name="browser" value="Chrome" />
+  	<parameter name="platform" value="Windows" />
+  	<parameter name="udid" value="NA" />
+  	<parameter name="devicename" value="NA" />
+  	<parameter name="version" value="NA" />
+  	<parameter name="appium_host_url" value="NA" />
+  	   	<classes>
+      		<class name="USER_SPACE.TestScripts.M1.TC_CreateLead"/>
+			
+    	</classes>
+  </test> <!-- Test -->
+  
+   <test name="FireFoxTest">
+  	<parameter name="isgrid" value="yes" />
+  	<parameter name="browser" value="Firefox" />
+  	<parameter name="platform" value="Windows" />
+  	<parameter name="udid" value="NA" />
+  	<parameter name="devicename" value="NA" />
+  	<parameter name="version" value="NA" />
+  	<parameter name="appium_host_url" value="NA" />
+  	   	<classes>
+      		<class name="USER_SPACE.TestScripts.M1.TC_CreateLead"/>
+			
+    	</classes>
+  </test> <!-- Test -->
+  
+    <test name="IETest">
+  	<parameter name="isgrid" value="yes" />
+  	<parameter name="browser" value="ie" />
+  	<parameter name="platform" value="Windows" />
+  	<parameter name="udid" value="NA" />
+  	<parameter name="devicename" value="NA" />
+  	<parameter name="version" value="NA" />
+  	<parameter name="appium_host_url" value="NA" />
+  	   	<classes>
+      		<class name="USER_SPACE.TestScripts.M1.TC_CreateLead"/>
+			
+    	</classes>
+  </test> <!-- Test -->
+  
+  <test name="AndroidTest_LYF">
+  	<parameter name="isgrid" value="yes" />
+  	<parameter name="browser" value="Chrome" />
+  	<parameter name="platform" value="android" />
+  	<parameter name="udid" value="4f9d96c0" />
+  	<parameter name="devicename" value="192.168.1.101:5555" />
+  	<parameter name="version" value="6.0.1" />
+  	<parameter name="appium_host_url" value="http://127.0.0.2:4730/wd/hub" />
+  	   	<classes>
+      		<class name="USER_SPACE.TestScripts.M1.TC_CreateLead"/>
+			
+    	</classes>
+  </test> <!-- Test -->
+  
+  <test name="AndroidTest_GEONEE">
+  	<parameter name="isgrid" value="yes" />
+  	<parameter name="browser" value="Chrome" />
+  	<parameter name="platform" value="android" />
+  	<parameter name="udid" value="Z5FUG6GINRV4R8FM" />
+  	<parameter name="devicename" value="192.168.1.100:5556" />
+  	<parameter name="version" value="4.4.2" />
+  	<parameter name="appium_host_url" value="http://127.0.0.1:4723/wd/hub" />
+    	<classes>
+      		<class name="USER_SPACE.TestScripts.M1.TC_CreateLead"/>
+			
+    	</classes>
+  </test> <!-- Test -->
+  
+  
+  
+ </suite> <!-- Suite -->

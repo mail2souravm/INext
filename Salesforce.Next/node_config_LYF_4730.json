@@ -1,0 +1,27 @@
+{
+  "capabilities":
+      [
+        {
+          "udid": "4f9d96c0",
+		  "deviceName": "4f9d96c0",
+          "browserName": "chrome",
+          "version":"6.0.1",
+          "maxInstances": 10,
+          "platform":"Android"
+        }
+      ],
+  "configuration":
+  {
+    "cleanUpCycle":3000,
+    "timeout":60000,
+    "proxy": "org.openqa.grid.selenium.proxy.DefaultRemoteProxy",
+    "url":"http://127.0.0.2:4730/wd/hub",
+    "host": "127.0.0.2",
+    "port": 4730,
+    "maxSession": 10,
+    "register": true,
+    "registerCycle": 5000,
+    "hubPort": 4444,
+    "hubHost": "192.168.1.104"
+  }
+}

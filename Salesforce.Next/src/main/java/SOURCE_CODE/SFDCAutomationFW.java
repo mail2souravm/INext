@@ -87,7 +87,7 @@ public class SFDCAutomationFW {
 	//public static int count_driverinstance_edge = 0;
 	
 	List<WebElement> allposblefieldelements;
-	
+	public static final ThreadLocal<Integer> thrd_id = new ThreadLocal<Integer>();
 	
 	//public static String Browser = null;
 	//this is third
@@ -95,6 +95,15 @@ public class SFDCAutomationFW {
 	//public static String Browser = null;
 	public static final ThreadLocal<String> brows = new ThreadLocal<String>();
 	public static final ThreadLocal<String> grid = new ThreadLocal<String>();
+	public static final ThreadLocal<String> platform = new ThreadLocal<String>();
+	public static final ThreadLocal<String> udid = new ThreadLocal<String>();
+	public static final ThreadLocal<String> devicename = new ThreadLocal<String>();
+	public static final ThreadLocal<String> version = new ThreadLocal<String>();
+	public static final ThreadLocal<String> appium_host_url = new ThreadLocal<String>();
+	
+	
+	public static AppiumDriver appdr;
+	
 	
 	//public static final ThreadLocal<JavascriptExecutor> Javascript = new ThreadLocal<JavascriptExecutor>();
 	public static final ThreadLocal<JavascriptExecutor> Javascript = new ThreadLocal<JavascriptExecutor>(){
@@ -118,11 +127,217 @@ public class SFDCAutomationFW {
         }
     };
 	
+  /*
+	public static final ThreadLocal<AppiumDriver> appdr = new ThreadLocal<AppiumDriver>() {
+		@Override
+		 protected AppiumDriver initialValue()
+		 {
+			try {
+			DesiredCapabilities capabilities = DesiredCapabilities.android();
+			capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, BrowserType.CHROME);
+			capabilities.setCapability("appPackage", "com.android.chrome");
+			capabilities.setCapability("appActivity", "com.google.android.apps.chrome.Main");
+			
+			capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME,"Android");
+			
+			capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "4f9d96c0");
+			capabilities.setCapability(MobileCapabilityType.VERSION, "6.0.1");
+			
+			return (new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities));
+			}catch(Exception e)
+			{
+				e.printStackTrace();
+				return null;
+			}
+		}
+		
+	};
+			
+	*/		
 	public static final ThreadLocal<RemoteWebDriver> myWD = new ThreadLocal<RemoteWebDriver>(){
         @Override
         protected RemoteWebDriver initialValue()
         {
         	try {
+        	
+        	ProjectHomeDir = System.getProperty("user.dir").replace("\\", "/");
+        		
+        	if(grid.get().equalsIgnoreCase("no") && platform.get().equalsIgnoreCase("Windows") )
+        	{
+        		if (brows.get().equalsIgnoreCase("chrome"))
+        		{
+            		//ProjectHomeDir = System.getProperty("user.dir").replace("\\", "/"); 
+            		
+            		System.setProperty("webdriver.chrome.driver",ProjectHomeDir + "/src/test/resources/chromedriver.exe");
+        			DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+        			
+        			System.out.println("creating chromedriver instance");
+        			RemoteWebDriver rwd = new ChromeDriver();
+        			Javascript.set(rwd);
+        			
+        			return (rwd);
+        						
+        		}
+        		else if((brows.get().equalsIgnoreCase("ff") ||brows.get().equalsIgnoreCase("firefox")))
+        		{
+        			//ProjectHomeDir = System.getProperty("user.dir").replace("\\", "/");
+        			System.setProperty("webdriver.gecko.driver",ProjectHomeDir + "/src/test/resources/geckodriver.exe");
+        			DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+        			System.out.println("creating ffdriver instance");
+        			RemoteWebDriver rwd = new FirefoxDriver();
+        			Javascript.set(rwd);
+        			
+        			return (rwd);
+        		   
+        		}
+        		else if(brows.get().equalsIgnoreCase("Edge"))
+        		{
+        			//ProjectHomeDir = System.getProperty("user.dir").replace("\\", "/");
+        			System.setProperty("webdriver.edge.driver",ProjectHomeDir + "/src/test/resources/MicrosoftWebDriver.exe");
+        			DesiredCapabilities capabilities = DesiredCapabilities.edge();
+        			
+        			RemoteWebDriver rwd = new EdgeDriver();
+        			Javascript.set(rwd);
+        			
+        			return (rwd);
+        		}
+        		else if(brows.get().equalsIgnoreCase("ie"))
+        		{
+        			//ProjectHomeDir = System.getProperty("user.dir").replace("\\", "/");
+        			System.setProperty("webdriver.ie.driver", ProjectHomeDir + "/src/test/resources/IEDriverServer.exe");
+        			//DesiredCapabilities capabilities = DesiredCapabilities.internetExplorer();
+        			System.out.println("creating iedriver instance");
+        			RemoteWebDriver rwd = new InternetExplorerDriver();
+        			Javascript.set(rwd);
+        			System.out.println("created ie instance");
+        			return (rwd);
+        		}
+        		
+        	}
+        		
+        	// ************************************* Grid ***********************************//
+        	
+        	else if(grid.get().equalsIgnoreCase("yes")  && platform.get().equalsIgnoreCase("windows") )
+        	{
+        		if (brows.get().equalsIgnoreCase("chrome"))
+        		{
+            		
+            		//ProjectHomeDir = System.getProperty("user.dir").replace("\\", "/"); 
+            		//System.setProperty("webdriver.chrome.driver",ProjectHomeDir + "/src/test/resources/chromedriver.exe");
+            		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+            		capabilities.setCapability("chrome.binary", "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");
+            		capabilities.setBrowserName("chrome");
+        			capabilities.setPlatform(Platform.WINDOWS);    			    			
+            		
+            		RemoteWebDriver rwd = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
+            		
+        			Javascript.set(rwd);
+        			
+        			return (rwd);
+        						
+        		}
+        		else if((brows.get().equalsIgnoreCase("ff") || brows.get().equalsIgnoreCase("firefox")))
+        		{
+        			//ProjectHomeDir = System.getProperty("user.dir").replace("\\", "/"); 
+            		
+            		//System.setProperty("webdriver.gecko.driver",ProjectHomeDir + "/src/test/resources/geckodriver.exe");
+        			//FirefoxOptions ffoptions = new FirefoxOptions();
+        			//ffoptions.setBinary("C:\\Program Files\\Mozilla Firefox\\firefox.exe");
+        			
+        			DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+        			capabilities.setCapability("marionette", true);
+        			capabilities.setBrowserName("firefox");
+        			capabilities.setPlatform(Platform.WINDOWS);
+        			
+        			//capabilities.setCapability("moz:FirefoxOptions", ffoptions);
+        			//capabilities.setBrowserName("firefox");
+        			//capabilities.setCapability("marionette", false);
+        			//capabilities.setPlatform(Platform.WIN10);    			    			
+        			RemoteWebDriver rwd = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
+        			Javascript.set(rwd);
+        			
+        			return (rwd);
+        		   
+        		}
+        		else if(brows.get().equalsIgnoreCase("Edge"))
+        		{
+        			//ProjectHomeDir = System.getProperty("user.dir").replace("\\", "/"); 
+        			//System.setProperty("webdriver.edge.driver",ProjectHomeDir + "/src/test/resources/MicrosoftWebDriver.exe");
+        			
+            		
+        			DesiredCapabilities capabilities = DesiredCapabilities.edge();
+        			capabilities.setPlatform(Platform.WINDOWS);    			    			
+        			RemoteWebDriver rwd = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
+        			Javascript.set(rwd);
+        			
+        			return (rwd);
+        		}
+            	
+        		else if(brows.get().equalsIgnoreCase("ie") || brows.get().equalsIgnoreCase("internetexplorer"))
+        		{
+        			 
+            		
+        			//System.setProperty("webdriver.ie.driver", ProjectHomeDir + "/src/test/resources/IEDriverServer.exe");
+        			DesiredCapabilities capabilities = DesiredCapabilities.internetExplorer();
+        			capabilities.setPlatform(Platform.WINDOWS);    			    
+        			//capabilities.setBrowserName("iexplore");
+        			//capabilities.setVersion("11");
+        			RemoteWebDriver rwd = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
+        			rwd.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+        			rwd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        			Javascript.set(rwd);
+        			
+        			return (rwd);
+        		}        		
+        	}
+        	else if(grid.get().equalsIgnoreCase("yes")  && platform.get().equalsIgnoreCase("android") )
+        	{
+        		DesiredCapabilities capabilities = DesiredCapabilities.android();
+    			capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, BrowserType.CHROME);
+    			
+    			///ChromeOptions options=new ChromeOptions();
+    		    //options.setExperimentalOption("androidPackage", "com.android.chrome");
+    		    //capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+    		    
+    			//capabilities.setCapability(MobileCapabilityType.PLATFORM, Platform.ANDROID);
+    			capabilities.setCapability("appPackage", "com.android.chrome");
+    			capabilities.setCapability("appActivity", "com.google.android.apps.chrome.Main");
+    			
+    			//capabilities.setCapability("appPackage", "com.android.chrome");
+    		    //capabilities.setCapability("appActivity","com.google.android.apps.chrome.ChromeTabbedActivity");
+    		    
+    			capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME,"Android");
+    			
+    			capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, devicename.get()); //
+    			//capabilities.setCapability(MobileCapabilityType.UDID, udid.get());
+    			capabilities.setCapability(MobileCapabilityType.VERSION, version.get());
+    			//capabilities.setCapability("newCommandTimeout", 600);
+    			  			
+    			//capabilities.setPlatform(Platform.WINDOWS);    			    
+    			//capabilities.setBrowserName("iexplore");
+    			//capabilities.setVersion("11");
+    			//RemoteWebDriver rwd = new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities); //Working code
+    			//RemoteWebDriver rwd = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities); //Working code
+    			//manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+    			//rwd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    			//Javascript.set(rwd);
+    			//return rwd;
+    			 appdr = new AndroidDriver(new URL(appium_host_url.get()), capabilities); //Working code
+    			
+    			 //appdr.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+    			 appdr.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    			
+    			Javascript.set(appdr);
+    			
+    			return (appdr);
+        	}
+        	else
+        	{
+        		System.out.println("isgrid parameter value is not supported. Shoud be yes/no");
+        		return null;
+        	}
+        	
+        	/*	
         	if (brows.get().equalsIgnoreCase("chrome") && grid.get().equalsIgnoreCase("no"))
     		{
         		ProjectHomeDir = System.getProperty("user.dir").replace("\\", "/"); 
@@ -262,28 +477,70 @@ public class SFDCAutomationFW {
     		    
     			capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME,"Android");
     			
-    			capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "4f9d96c0");
-    			capabilities.setCapability(MobileCapabilityType.VERSION, "6.0.1");
-    			
-    			
-    			
+    			capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Z5FUG6GINRV4R8FM"); //
+    			capabilities.setCapability(MobileCapabilityType.UDID, "Z5FUG6GINRV4R8FM");
+    			capabilities.setCapability(MobileCapabilityType.VERSION, "4.4.2");
+    			//capabilities.setCapability("newCommandTimeout", 600);
+    			  			
     			//capabilities.setPlatform(Platform.WINDOWS);    			    
-    			
     			//capabilities.setBrowserName("iexplore");
     			//capabilities.setVersion("11");
-    			//RemoteWebDriver rwd = new RemoteWebDriver(new URL("http://192.168.1.104:4444/wd/hub"), capabilities);
-    			RemoteWebDriver rwd = new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
-    			//RemoteWebDriver rwd = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
-    			rwd.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
-    			rwd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    			//RemoteWebDriver rwd = new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities); //Working code
+    			//RemoteWebDriver rwd = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities); //Working code
+    			//manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+    			//rwd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    			//Javascript.set(rwd);
+    			//return rwd;
+    			 appdr = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities); //Working code
     			
-    			Javascript.set(rwd);
+    			 //appdr.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+    			 appdr.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     			
-    			return (rwd);
+    			Javascript.set(appdr);
+    			
+    			return (appdr);
+    		}
+    		else if(brows.get().equalsIgnoreCase("Android1") && grid.get().equalsIgnoreCase("yes"))
+    		{
+    			
+    			DesiredCapabilities capabilities = DesiredCapabilities.android();
+    			capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, BrowserType.CHROME);
+    			
+    			///ChromeOptions options=new ChromeOptions();
+    		    //options.setExperimentalOption("androidPackage", "com.android.chrome");
+    		    //capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+    		    
+    			//capabilities.setCapability(MobileCapabilityType.PLATFORM, Platform.ANDROID);
+    			capabilities.setCapability("appPackage", "com.android.chrome");
+    			capabilities.setCapability("appActivity", "com.google.android.apps.chrome.Main");
+    			
+    			//capabilities.setCapability("appPackage", "com.android.chrome");
+    		    //capabilities.setCapability("appActivity","com.google.android.apps.chrome.ChromeTabbedActivity");
+    		    
+    			capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME,"Android");
+    			//capabilities.setCapability("newCommandTimeout", 600);
+    			capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "4f9d96c0"); //
+    			capabilities.setCapability(MobileCapabilityType.UDID, "4f9d96c0");
+    			capabilities.setCapability(MobileCapabilityType.VERSION, "6.0.1");
+    			
+    			  			
+    			//capabilities.setPlatform(Platform.WINDOWS);    			    
+    			//capabilities.setBrowserName("iexplore");
+    			//capabilities.setVersion("11");
+    			//RemoteWebDriver rwd = new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities); //Working code
+    			//RemoteWebDriver rwd = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities); //Working code
+    			  			
+    			 appdr = new AndroidDriver(new URL("http://127.0.0.2:4730/wd/hub"), capabilities); //Working code
+    			
+    			 appdr.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+    			 appdr.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    			
+    			Javascript.set(appdr);
+    			
+    			return (appdr);
     		}
         	
-        	
-        	
+        	*/
         	return null;
         	}catch(Exception e)
         	{
@@ -294,7 +551,81 @@ public class SFDCAutomationFW {
         }
 	};
 	
-	public synchronized boolean OpenURL(String[] args,String URL,String browser, String isgrid) throws Exception
+	
+	/**
+	 * @author Sourav Mukherjee
+	 * @Param URL
+	 * @return void
+	 * @throws Exception
+	 * @Description Opens page in already opened browser as per supplied URL
+	 * @Date Aug 7, 2014
+	 */
+	public static void OpenSFDCRecordAsperURL(String URL) throws Exception
+	{
+		WaitForPageToLoad(15);
+		try 
+		{
+			myWD.get().get(URL);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public static String getParallelID() throws Exception
+	{
+		
+		try 
+		{
+			return ("_"+ platform.get() + "_" + brows.get());
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return "";
+		}
+	}
+	
+	
+	/**
+	 * @param ApplicationName
+	 * @throws Exception
+	 */
+	public static void SelectApplication(String ApplicationName) throws Exception
+	{
+		try 
+		{
+		if (myWD.get().findElement(By.xpath("//*[@id='tsidLabel']")).getText().trim().equals(ApplicationName.trim()))
+		{
+			
+			System.out.println("The application ("+ApplicationName+") is selected successfully.");
+		}
+		else
+		{
+			myWD.get().findElement(By.xpath("//*[@id='tsid-arrow']")).click();
+			Thread.sleep(1000L);
+        	if (myWD.get().findElement(By.xpath("//*[contains(@class,'menuButtonMenuLink') and contains(text(), '"+ApplicationName+"')]")).isDisplayed())
+        	{
+        		myWD.get().findElement(By.xpath(".//*[contains(@class,'menuButtonMenuLink') and contains(text(), '"+ApplicationName+"')]")).click();
+        		
+    			System.out.println("The application ("+ApplicationName+") is selected successfully.");
+    	   	}
+        	else
+        	{
+        		
+				System.out.println("Unable to select the application for ("+ApplicationName+"). Please check the related xpaths or application name properly.");
+        	}
+		
+		}
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public synchronized boolean OpenURL(String[] args,String URL, String isgrid, String browser, String platform_os, String udid_m, String devname_m, String ver_m,String appium_url) throws Exception
 	{
 		try 
 		{
@@ -313,9 +644,21 @@ public class SFDCAutomationFW {
 			
 			brows.set(browser);
 			grid.set(isgrid);
+			platform.set(platform_os);
+			udid.set(udid_m);
+			devicename.set(devname_m);
+			version.set(ver_m);
+			appium_host_url.set(appium_url);
+			
+			
 			myWD.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			myWD.get().navigate().to(URL);
 			//myWD.get().manage().window().maximize();
+			if(myWD.get().toString().contains("ANDROID"))
+			{
+				System.out.println("Do nothing for now");
+			}
+				
 			return true;
 		
 		}catch(Exception e)
@@ -324,6 +667,134 @@ public class SFDCAutomationFW {
 			return false;
 		}
 		
+	}
+	
+	public static void changeDriverContextToNative() {
+	    Set<String> contextNames = appdr.getContextHandles();
+	    for (String contextName : contextNames) {
+	        if (contextName.contains("NATIVE"))
+	            appdr.context(contextName);
+	    }
+	}
+	public static void changeDriverContextToWeb() {
+	    Set<String> allContext = appdr.getContextHandles();
+	    for (String context : allContext) {
+	        if (context.contains("WEBVIEW"))
+	        	appdr.context(context);
+	    }
+	}
+
+
+	
+	public static boolean LoginToSFDC(String un,String pw) throws Exception
+	{
+		try
+		{
+			
+		//Javascript = (JavascriptExecutor) myWD.get();	
+			
+		System.out.println("javascript:"+Javascript.toString());	
+		System.out.println("checking appiumdriver:"+myWD.get().toString());
+			
+		Thread.sleep(3000L);
+		String xpath_UserName = "//input[normalize-space(@type)='email' and normalize-space(@id)='username'][1]";
+		String xpath_Password = "//input[normalize-space(@type)='password' and normalize-space(@id)='password'][1]";
+		String xpath_LoginButton = "//input[contains(@class,'button') and @type='submit'][1]";
+		System.out.println("myWD.get().findElement(By.xpath(xpath_UserName)):"+myWD.get().findElement(By.xpath(xpath_UserName)));
+		//myWD.get().findElement(By.xpath(xpath_UserName)).clear();
+		//myWD.get().findElement(By.xpath(xpath_UserName)).sendKeys(un);
+		myWD.get().findElement(By.xpath(xpath_UserName)).clear();
+		myWD.get().findElement(By.xpath(xpath_UserName)).sendKeys(un);
+		
+	 	myWD.get().findElement(By.xpath(xpath_Password)).clear();
+		myWD.get().findElement(By.xpath(xpath_Password)).sendKeys(pw);
+		
+		myWD.get().findElement(By.xpath(xpath_LoginButton)).click();
+			
+		System.out.println("(myWD.toString():"+myWD.get().toString());
+		
+		Thread.sleep(5000L);		
+			
+		System.out.println("count_driverinstance_chrome: "+flag_driverinstance_chrome);
+		System.out.println("count_driverinstance_ff: "+flag_driverinstance_ff);
+		//System.out.println("count_driverinstance_ie: "+count_driverinstance_ie);
+		System.out.println("thrd_id.get():------------------->"+thrd_id.get());
+		if(!(myWD.get().toString().contains("InternetExplorer") || myWD.get().toString().contains("ANDROID")))
+		{
+			if(
+				( 
+						(myWD.get().toString().contains("FirefoxDriver") &&  flag_driverinstance_ff == false) 
+											||
+						(myWD.get().toString().contains("ChromeDriver") &&  flag_driverinstance_chrome == false)
+											||
+						(myWD.get().toString().contains("RemoteWebDriver") &&  (myWD.get().toString().contains("chrome")) && flag_driverinstance_chrome == false)
+											||
+						(myWD.get().toString().contains("RemoteWebDriver") &&  (myWD.get().toString().contains("firefox")) && flag_driverinstance_chrome == false)
+				) 
+				
+				&&
+				
+				(
+						thrd_id.get() == null
+				)
+			   )							
+				
+			{
+			
+			thrd_id.set((int)Thread.currentThread().getId());
+			
+			WaitForElement("//a[text()='No Thanks'][1]", 60);
+			myWD.get().findElement(By.xpath("//a[text()='No Thanks'][1]")).click();
+			Thread.sleep(3000L);
+			myWD.get().findElement(By.xpath("//label[@for='lex-checkbox-7'][1]/span[1]")).click();
+			Thread.sleep(2000L);
+			myWD.get().findElement(By.xpath("//input[@title='Send to Salesforce'][1]")).click();
+			}
+			if(myWD.get().toString().contains("ChromeDriver"))
+			{
+				flag_driverinstance_chrome = true;
+			}
+			if(myWD.get().toString().contains("FirefoxDriver"))
+			{
+				flag_driverinstance_ff = true;
+			}
+			
+			
+		}
+		Thread.sleep(2000L);
+		WebDriverWaitForElement("//a[contains(normalize-space(text()),'Home')]", 60);
+		return true;
+		}catch(Exception e)
+		{        	
+			e.printStackTrace();
+			return false;
+		}
+		
+}
+
+	
+	
+	/**
+	 * @author Sourav Mukherjee
+	 * @Param 
+	 * @return On Success it returns the entire URL of the WebDriver browser window, on Failure it returns blank value
+	 * @throws Exception
+	 * @Description Copies the Current URL of the WebDriver browser window, on Failure it returns blank value
+	 * @Date Aug 7, 2014
+	 */
+	public static String GetCurrentURL() throws Exception
+	{
+		WaitForPageToLoad(30);
+		try 
+		{
+			
+			return myWD.get().getCurrentUrl();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return "";
+		}
 	}
 	
 	/**
@@ -364,80 +835,6 @@ public class SFDCAutomationFW {
 			System.out.println("Unable to scroll until elemnt");
 		}
 	}
-	
-	public static boolean LoginToSFDC(String un,String pw) throws Exception
-	{
-		try
-		{
-			
-		//Javascript = (JavascriptExecutor) myWD.get();	
-			
-		System.out.println("javascript:"+Javascript.toString());	
-			
-		Thread.sleep(2000L);
-		String xpath_UserName = "//input[normalize-space(@type)='email' and normalize-space(@id)='username'][1]";
-		String xpath_Password = "//input[normalize-space(@type)='password' and normalize-space(@id)='password'][1]";
-		String xpath_LoginButton = "//input[contains(@class,'button') and @type='submit'][1]";
-		myWD.get().findElement(By.xpath(xpath_UserName)).clear();
-		myWD.get().findElement(By.xpath(xpath_UserName)).sendKeys(un);
-		
-		
-	 	myWD.get().findElement(By.xpath(xpath_Password)).clear();
-		myWD.get().findElement(By.xpath(xpath_Password)).sendKeys(pw);
-		
-		myWD.get().findElement(By.xpath(xpath_LoginButton)).click();
-			
-		System.out.println("(myWD.toString():"+myWD.get().toString());
-		
-		Thread.sleep(5000L);		
-			
-		System.out.println("count_driverinstance_chrome: "+flag_driverinstance_chrome);
-		System.out.println("count_driverinstance_ff: "+flag_driverinstance_ff);
-		//System.out.println("count_driverinstance_ie: "+count_driverinstance_ie);
-		
-		if(!(myWD.get().toString().contains("InternetExplorer") || myWD.get().toString().contains("ANDROID")))
-		{
-			if(
-				(myWD.get().toString().contains("FirefoxDriver") &&  flag_driverinstance_ff == false) 
-											||
-				(myWD.get().toString().contains("ChromeDriver") &&  flag_driverinstance_chrome == false)
-											||
-				(myWD.get().toString().contains("RemoteWebDriver") &&  (myWD.get().toString().contains("chrome")) && flag_driverinstance_chrome == false)
-											||
-				(myWD.get().toString().contains("RemoteWebDriver") &&  (myWD.get().toString().contains("firefox")) && flag_driverinstance_chrome == false)
-			  )
-											
-				
-			{
-			WaitForElement("//a[text()='No Thanks'][1]", 60);
-			myWD.get().findElement(By.xpath("//a[text()='No Thanks'][1]")).click();
-			Thread.sleep(3000L);
-			myWD.get().findElement(By.xpath("//label[@for='lex-checkbox-7'][1]/span[1]")).click();
-			Thread.sleep(2000L);
-			myWD.get().findElement(By.xpath("//input[@title='Send to Salesforce'][1]")).click();
-			}
-			if(myWD.get().toString().contains("ChromeDriver"))
-			{
-				flag_driverinstance_chrome = true;
-			}
-			if(myWD.get().toString().contains("FirefoxDriver"))
-			{
-				flag_driverinstance_ff = true;
-			}
-			
-			
-		}
-		Thread.sleep(2000L);
-		WebDriverWaitForElement("//a[contains(normalize-space(text()),'Home')]", 60);
-		return true;
-		}catch(Exception e)
-		{        	
-			e.printStackTrace();
-			return false;
-		}
-		
-}
-	
 public static ThreadLocal<RemoteWebDriver> GetDriver() throws Exception
 {
 	try {
@@ -534,7 +931,7 @@ public static void WaitForPageToLoad(int timeOutInSeconds) throws Exception
  * @Description Logs out from sales force 
  * @Date Aug 7, 2014
  */
-public static synchronized void LogOff() throws Exception
+public static void LogOff() throws Exception
 {
 	try 
 	{

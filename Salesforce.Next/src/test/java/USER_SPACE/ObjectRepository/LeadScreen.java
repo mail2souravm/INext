@@ -51,6 +51,9 @@ public static MemberOfField IndustryField() throws Exception{
 public static MemberOfField LeadStatusField() throws Exception{ 
 	return SFDCAutomationFW.Field("Lead Status"); 
 } 
+public static MemberOfField CampaignField() throws Exception{ 
+	return SFDCAutomationFW.Field("Campaign"); 
+} 
 public static MemberOfField AnnualRevenueField() throws Exception{ 
 	return SFDCAutomationFW.Field("Annual Revenue"); 
 } 
@@ -111,6 +114,8 @@ public static MemberOfField ZipPostalCodeField() throws Exception{
 public static MemberOfButton EditButton() throws Exception{ 
 return SFDCAutomationFW.Button("Edit"); 
 } 
+
+
 public static MemberOfButton AddtoCampaignButton() throws Exception{ 
 return SFDCAutomationFW.Button("Add to Campaign"); 
 } 

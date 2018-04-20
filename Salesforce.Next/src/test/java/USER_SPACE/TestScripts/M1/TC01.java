@@ -8,20 +8,34 @@ import USER_SPACE.ObjectRepository.LeadScreen;
 
 public class TC01 {
 
-	public static final ThreadLocal<String> brow = new ThreadLocal<String>();
-	public static final ThreadLocal<String> grid = new ThreadLocal<String>();
+	
 	public static final ThreadLocal<SFDCAutomationFW> sfdc = new ThreadLocal<SFDCAutomationFW>(){@Override protected SFDCAutomationFW initialValue(){return (new SFDCAutomationFW());}};
 	
+	public static final ThreadLocal<String> brow = new ThreadLocal<String>();
+	public static final ThreadLocal<String> grid = new ThreadLocal<String>();
+	public static final ThreadLocal<String> platform = new ThreadLocal<String>();
+	public static final ThreadLocal<String> udid = new ThreadLocal<String>();
+	public static final ThreadLocal<String> devicename = new ThreadLocal<String>();
+	public static final ThreadLocal<String> version = new ThreadLocal<String>();
+	public static final ThreadLocal<String> appium_url = new ThreadLocal<String>();
 
-	@Parameters({ "browser", "isgrid" })
+	//@Parameters("browser")
+	@Parameters({"isgrid","browser","platform","udid","devicename","version","appium_host_url"})
 	@Test
-	public void MyTestScenario(String browser, String isgrid) throws Exception 
+	public void MyTestScenario(String isgrid, String browser, String platform, String udid, String devicename,String version, String appium_host_url) throws Exception 
 	{
-		
-		brow.set(browser);
-		grid.set(isgrid);
+			
+		this.grid.set(isgrid);
+		this.brow.set(browser);
+		this.platform.set(platform);
+		this.udid.set(udid);
+		this.devicename.set(devicename);
+		this.version.set(version);
+		this.appium_url.set(appium_host_url);
+			
 		System.out.println("from TC01 --> Browser:"+brow.get());
-		sfdc.get().OpenURL(null, "https://login.salesforce.com", brow.get(),grid.get());
+		sfdc.get().OpenURL(null, "https://login.salesforce.com",grid.get(),brow.get(),this.platform.get(), this.udid.get(),this.devicename.get(),this.version.get(),this.appium_url.get());
+		
 		sfdc.get().LoginToSFDC("mail2souravm@gmail.com","Welcome400");
 		sfdc.get().Link("Leads").Click();
 		LeadScreen.NewButton().Click();

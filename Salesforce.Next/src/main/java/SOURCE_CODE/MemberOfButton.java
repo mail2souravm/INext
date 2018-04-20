@@ -40,7 +40,7 @@ public class MemberOfButton {
 				
 				//SFDCAutomationFW.MouseMove(xpath);
 				//System.out.println("just after mousemove");
-				if (myWD.get().toString().contains("InternetExplorerDriver"))
+				if (myWD.get().toString().contains("InternetExplorerDriver") || myWD.get().toString().contains("ANDROID"))
 				{
 					Thread.sleep(500L);
 					((JavascriptExecutor) myWD.get()).executeScript("arguments[0].click();", myWD.get().findElement(By.xpath(xpath)));

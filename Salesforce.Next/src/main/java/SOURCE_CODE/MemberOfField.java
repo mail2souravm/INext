@@ -18,6 +18,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.Select;
 
+import io.appium.java_client.AppiumDriver;
+
 public class MemberOfField {
 	String fieldname;
 	ThreadLocal<RemoteWebDriver> myWD;
@@ -168,7 +170,27 @@ public class MemberOfField {
 			getsingleWebelement.clear();
 			getsingleWebelement.sendKeys(Value);
 			
+			/*
+			if(SFDCAutomationFW.appdr.toString().contains("ANDROID")) 
+			{
+						
+				try 
+				{
+					SFDCAutomationFW.changeDriverContextToNative();
+					SFDCAutomationFW.appdr.hideKeyboard();
+					SFDCAutomationFW.changeDriverContextToWeb();
+					
+				}
+				catch(Exception e) 
+				{
+					SFDCAutomationFW.changeDriverContextToWeb();
+				}
+				
 			
+				
+				Thread.sleep(3000L);
+			}
+			*/
 			//System.out.println("TagName:"+getsingleWebelement.getTagName()+"|"+"class:"+getsingleWebelement.getAttribute("class")+"|"+"id:"+getsingleWebelement.getAttribute("id")+"|"+"type:"+getsingleWebelement.getAttribute("type")+"|"+"text:"+getsingleWebelement.getText()+"|");
 		/*
 		for(WebElement we1:allposblefieldelements)
